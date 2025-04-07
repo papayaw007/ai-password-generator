@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body,
+      input,
+      button {
+        font-family: "Space Mono", monospace;
+      }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <title>AI Password Generator</title>
+  </head>
+  <body>
+    <div class="h-screen bg-zinc-900 flex justify-center items-center">
+      <div class="flex flex-col justify-center items-center space-y-5">
+        <div>
+          <h1 class="text-zinc-400 text-xl">AI Password Generator</h1>
+        </div>
+        <div class="flex bg-zinc-800 w-96 py-5 px-5 text-zinc-500 gap-x-48">
+          <p class="text-2xl" id="gen-password">P4$5W0rD!</p>
+          <button>
+            <img src="/images/icon-copy.svg" alt="copy-image" id="copy-btn" />
+          </button>
+        </div>
+        <div class="bg-zinc-800 w-96 p-5">
+          <div>
+            <div class="flex text-white gap-x-38">
+              <p>Character Length</p>
+              <div class="flex justify-center items-center">
+                <input type="text" placeholder="0" value="" class="flex justify-center items-center border border-2 border-green-300 pl-2 text-green-300 rounded-md text-xl w-12" id="character-input" />
+              </div>
+            </div>
+            <div class="hidden">
+              <p class="hidden">scroll animate</p>
+              <div>
+                <input type="text" name="" value="" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <ul class="flex flex-col justify-center text-white space-y-2 mt-5">
+              <li class="flex space-x-3">
+                <div
+                  id="checkbox"
+                  class="w-5 h-5 border-2 border-gray-400 rounded-md cursor-pointer flex items-center justify-center transition-colors duration-200"
+                >
+                  <!-- Tick Icon (hidden by default) -->
+                  <svg
+                    id="check-icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-green-300 hidden"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <div>Include Uppercase Letters</div>
+              </li>
+              <li class="flex space-x-3">
+                <div
+                  id="checkbox-2"
+                  class="w-5 h-5 border-2 border-gray-400 rounded-md cursor-pointer flex items-center justify-center transition-colors duration-200"
+                >
+                  <!-- Tick Icon (hidden by default) -->
+                  <svg
+                    id="check-icon-2"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-green-300 hidden"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <div class="flex justify-center items-center">Include Lowercase Letters</div>
+              </li>
+              <li class="flex space-x-3">
+                <div
+                  id="checkbox-3"
+                  class="w-5 h-5 border-2 border-gray-400 rounded-md cursor-pointer flex items-center justify-center transition-colors duration-200"
+                >
+                  <!-- Tick Icon (hidden by default) -->
+                  <svg
+                    id="check-icon-3"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-green-300 hidden"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <div>Include Numbers</div>
+              </li>
+              <li class="flex space-x-3">
+                <div
+                  id="checkbox-4"
+                  class="w-5 h-5 border-2 border-gray-400 rounded-md cursor-pointer flex items-center justify-center transition-colors duration-200"
+                >
+                  <!-- Tick Icon (hidden by default) -->
+                  <svg
+                    id="check-icon-4"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-green-300 hidden"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="3"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+                <div>Include Symbols</div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="my-4 ">
+            <p class="text-zinc-400 mb-2">Add a description prompt</p>
+            <input type="text" name="" id="text-prompt" placeholder="It should include..." class="border border-zinc-400 w-84 p-4 text-zinc-400">
+          </div>
+          <div class="flex justify-center items-center bg-zinc-900 p-5 mt-5  space-x-40">
+            <div>
+              <p class="text-zinc-400">STRENGTH</p>
+            </div>
+            <div>
+                <div class="grid grid-cols-4 gap-3">
+                    <div class="bg-grey-200 border border-white w-4 h-9 flex items-center justify-center " id="strength1">
+                    
+                    </div>
+                    <div class="bg-grey-200 border border-white w-4 h-9 flex items-center justify-center " id="strength2">
+                
+                    </div>
+                    <div class="bg-grey-200 border border-white  w-4 h-9 flex items-center justify-center " id="strength3">
+                 
+                    </div>
+                    <div class="bg-grey-200 border border-white   w-4 h-9 flex items-center justify-center" id="strength4">
+        
+                    </div>
+                  </div>
+            </div>
+          </div>
+          <div class="flex p-5 flex items-center justify-center border-2 border-green-300  bg-green-300 mt-5 hover:bg-zinc-800 hover:border-2 border-green-300 hover:text-green-300">
+            <button class="flex items-center justify-center space-x-4 " id="gen-btn">
+              <div>GENERATE</div>
+              <img src="/images/icon-arrow-right.svg" alt="arrow-right-img" class="w-3 h-3 hover:bg-green-300" />
+            </button>
+          </div>
+        
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="main.js"></script>
+</html>
