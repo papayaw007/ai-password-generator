@@ -10,10 +10,10 @@ const incNumberBox = document.getElementById("check-icon-3");
 const incSymbol = document.getElementById("checkbox-4");
 const incSymbolBox = document.getElementById("check-icon-4");
 const textPrompt = document.getElementById("text-prompt");
-const strength1 = document.getElementById("strength-1");
-const strength2 = document.getElementById("strength-2");
-const strength3 = document.getElementById("strength-3");
-const strength4 = document.getElementById("strength-4");
+const strength1 = document.getElementById("strength1");
+const strength2 = document.getElementById("strength2");
+const strength3 = document.getElementById("strength3");
+const strength4 = document.getElementById("strength4");
 const generate = document.getElementById("gen-btn");
 
 const character = characters.textContent;
@@ -29,6 +29,11 @@ const resetting = () => {
   incLowerBox.classList.add("hidden");
   incNumberBox.classList.add("hidden");
   incSymbolBox.classList.add("hidden");
+  strength1.classList.replace("bg-yellow-200", "bg-grey-200");
+  strength2.classList.replace("bg-yellow-200", "bg-grey-200");
+  strength3.classList.replace("bg-yellow-200", "bg-grey-200");
+  strength4.classList.replace("bg-yellow-200", "bg-grey-200");
+
 };
 
 const getCharacter = () => characters.value
@@ -56,7 +61,7 @@ incSymbol.addEventListener("click", function () {
   console.log(startPrompt);
 });
 
-generate.addEventListener("click", () => {
+generate.addEventListener("click", async() => {
 
     const t = textPrompt.value;
     console.log(t);
@@ -76,10 +81,63 @@ generate.addEventListener("click", () => {
   }
 
   startPrompt = startPrompt + ' ' + t;
-  console.log(startPrompt);
+  //console.log(startPrompt);
+
+  try {
+    genPwd.textContent = "Generating...";
+    
+    // Get the prompt string from the textarea
+    const promptString = startPrompt;
+    
+    const password = await generatePasswordWithPrompt(promptString);
+    genPwd.textContent = password;
+} catch (error) {
+    genPwd.textContent = "Error generating password: " + error.message;
+    console.error(error);
+}
 });
 
 
+
+// Function to call OpenAI API with your prompt string
+async function generatePasswordWithPrompt(promptString) {
+// Replace with your actual API key (use environment variables in production)
+const OPENAI_API_KEY = "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";
+
+const response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+        model: "gpt-4", // or gpt-3.5-turbo
+        messages: [
+            {
+                role: "system",
+                content: "You are a password generator. Only respond with the generated password."
+            },
+            {
+                role: "user",
+                content: promptString
+            }
+        ],
+        max_tokens: 50,
+        temperature: 0.7
+    })
+});
+
+
+
+const data = await response.json();
+
+if (!response.ok) {
+    throw new Error(data.error?.message || "API request failed");
+}
+
+return data.choices[0].message.content.trim();
+
+}
 
 copy.addEventListener('click', () => {
     // Use the Clipboard API
@@ -91,4 +149,9 @@ copy.addEventListener('click', () => {
       .catch(err => {
         console.error('Failed to copy: ', err);
       });
+
+      resetting();
+      genPwd.textContent = 'P4$5W0rD!';
+      characters.value= '';
+      textPrompt.value = '';
   });
