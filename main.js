@@ -110,10 +110,10 @@ async function generatePasswordWithPrompt(promptString) {
     
     const API_URL = isLocalhost 
     ? 'http://localhost:3000/api/generate-password'
-    : 'https://ai-password-generator-backend.onrender.com';
+    : 'https://ai-password-generator-backend.onrender.com/api/generate-password';
 
     try {
-      const response =  await fetch(API_URL + '/api/generate-password', {
+      const response =  await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
