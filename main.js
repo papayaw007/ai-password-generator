@@ -129,19 +129,8 @@ async function generatePasswordWithPrompt(promptString) {
       
       return data.password;
     } catch (error) {
-        if (error.response) {
-            // Log the response data
-            console.error('API Error Response:', error.response.data);
-            res.status(500).json({ error: error.response.data });
-          } else if (error.request) {
-            // Log the request details (if no response received)
-            console.error('API Error Request:', error.request);
-            res.status(500).json({ error: 'No response received from API' });
-          } else {
-            // Log the general error message
-            console.error('Error Message:', error.message);
-            res.status(500).json({ error: error.message || 'Failed to generate password' });
-          }
+        console.error("Error:", error);
+    throw error;
     }
   }
 
