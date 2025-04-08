@@ -108,7 +108,7 @@ async function generatePasswordWithPrompt(promptString) {
     const isLocalhost = window.location.hostname === 'localhost' || 
     window.location.hostname === '127.0.0.1';
     
-    const API_URL = process.env.NODE_ENV === 'development' 
+    const API_URL = isLocalhost 
     ? 'http://localhost:3000/api/generate-password'
     : 'https://ai-password-generator-backend.onrender.com';
 
