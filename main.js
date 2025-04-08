@@ -113,7 +113,7 @@ async function generatePasswordWithPrompt(promptString) {
     : 'https://ai-password-generator-backend.onrender.com';
 
     try {
-      const response =  await fetch(window.appConfig.apiUrl, {
+      const response =  await fetch(API_URL + '/api/generate-password', {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
