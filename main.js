@@ -100,44 +100,38 @@ generate.addEventListener("click", async() => {
 
 
 // Function to call OpenAI API with your prompt string
-async function generatePasswordWithPrompt(promptString) {
+
 // Replace with your actual API key (use environment variables in production)
-const OPENAI_API_KEY = "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";
 
-const response = await fetch("https://api.openai.com/v1/chat/completions", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${OPENAI_API_KEY}`
-    },
-    body: JSON.stringify({
-        model: "gpt-4", // or gpt-3.5-turbo
-        messages: [
-            {
-                role: "system",
-                content: "You are a password generator. Only respond with the generated password."
-            },
-            {
-                role: "user",
-                content: promptString
-            }
-        ],
-        max_tokens: 50,
-        temperature: 0.7
-    })
-});
+async function generatePasswordWithPrompt(promptString) {
 
+    
+    const API_URL = process.env.NODE_ENV === 'development' 
+    ? 'http://localhost:3000/api/generate-password'
+    : 'https://ai-password-generator-backend.onrender.com';
 
+    try {
+        const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ promptString })
+      });
+      
+      const data = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(data.error || "API request failed");
+      }
+      
+      return data.password;
+    } catch (error) {
+      console.error("Error:", error);
+      throw error;
+    }
+  }
 
-const data = await response.json();
-
-if (!response.ok) {
-    throw new Error(data.error?.message || "API request failed");
-}
-
-return data.choices[0].message.content.trim();
-
-}
 
 copy.addEventListener('click', () => {
     // Use the Clipboard API
