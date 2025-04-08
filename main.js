@@ -105,13 +105,15 @@ generate.addEventListener("click", async() => {
 
 async function generatePasswordWithPrompt(promptString) {
 
+    const isLocalhost = window.location.hostname === 'localhost' || 
+    window.location.hostname === '127.0.0.1';
     
     const API_URL = process.env.NODE_ENV === 'development' 
     ? 'http://localhost:3000/api/generate-password'
     : 'https://ai-password-generator-backend.onrender.com';
 
     try {
-        const response = await fetch(API_URL, {
+      const response =  await fetch(API_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
